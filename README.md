@@ -1,6 +1,6 @@
 # Arc-CDS Protocol
 
-> **⚠️ Status: Testnet only — Do not use with real funds.**
+> **Status: Testnet only — Do not use with real funds.**
 > Arc mainnet has not launched. All contracts deployed here are for testing purposes.
 > The protocol token CDSProp has no monetary value during this phase.
 
@@ -16,21 +16,21 @@ credit strategies — all settled in USDC with sub-second deterministic finality
 
 ## Table of Contents
 
-1. [Features](#-features)
-2. [Architecture](#-architecture)
-3. [Quick Start](#-quick-start)
-4. [Deployments](#-deployments)
-5. [Testing](#-testing)
-6. [Documentation](#-documentation)
-7. [Security](#-security)
-8. [Contributing](#-contributing)
-9. [Roadmap](#-roadmap)
-10. [License](#-license)
-11. [Acknowledgements](#-acknowledgements)
+1. [Features](#features)
+2. [Architecture](#architecture)
+3. [Quick Start](#quick-start)
+4. [Deployments](#deployments)
+5. [Testing](#testing)
+6. [Documentation](#documentation)
+7. [Security](#security)
+8. [Contributing](#contributing)
+9. [Roadmap](#roadmap)
+10. [License](#license)
+11. [Acknowledgements](#acknowledgements)
 
 ---
 
-## ✨ Features
+## Features
 
 - **Single-Name CDS** — protection buyer/seller positions with per-second premium
   streaming and margin-isolated accounting
@@ -49,7 +49,7 @@ credit strategies — all settled in USDC with sub-second deterministic finality
 - **Governance** — CDSProp token with on-chain asset inclusion proposals,
   slash incentives, and 48 h timelock on parameter changes
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -85,7 +85,7 @@ credit strategies — all settled in USDC with sub-second deterministic finality
 | Credit Oracle | `CreditOracle` | [docs/modules/credit-oracle.md](docs/modules/credit-oracle.md) |
 | Margin Engine | `MarginEngine` | [docs/modules/margin-engine.md](docs/modules/margin-engine.md) |
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -123,9 +123,9 @@ FOUNDRY_PROFILE=local forge script script/Deploy.s.sol \
   --rpc-url http://127.0.0.1:8545 --broadcast
 ```
 
-> ⚠️ Always `pkill anvil` when done. See `CLAUDE.md §8.2` for resource limits.
+> Always `pkill anvil` when done to avoid leaving zombie fork processes.
 
-## 📦 Deployments
+## Deployments
 
 | Network | Status | Explorer |
 |---------|--------|---------|
@@ -135,7 +135,7 @@ FOUNDRY_PROFILE=local forge script script/Deploy.s.sol \
 Contract addresses are tracked in [`deployments/`](deployments/) and
 [`config/arc.testnet.yaml`](config/arc.testnet.yaml) once deployed.
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # All tests (local fuzz: 256 runs)
@@ -156,7 +156,7 @@ forge snapshot
 forge coverage --report lcov
 ```
 
-## 📚 Documentation
+## Documentation
 
 | Document | Description |
 |----------|-------------|
@@ -165,21 +165,20 @@ forge coverage --report lcov
 | [docs/design/](docs/design/) | Protocol white paper and specs (coming soon) |
 | [docs/adr/](docs/adr/) | Architecture Decision Records |
 | [docs/modules/](docs/modules/) | Per-module technical docs |
-| [CLAUDE.md](CLAUDE.md) | AI-assisted development guidelines |
 
-## 🔐 Security
+## Security
 
 - Audit status: **Pre-audit** (Phase 1 external audit planned)
 - Bug bounty: Announced prior to mainnet deployment
 - Vulnerability disclosure: [SECURITY.md](SECURITY.md)
 - **Do not report security issues via public GitHub issues**
 
-## 🤝 Contributing
+## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for branch strategy, commit conventions,
 coding standards, and PR requirements.
 
-## 🗺️ Roadmap
+## Roadmap
 
 | Phase | Months | Scope |
 |-------|--------|-------|
@@ -187,11 +186,11 @@ coding standards, and PR requirements.
 | **Phase 1** | M4–M6 | CDSIndex · PumpCDSLauncher · Flash strategies · Real USYC · Audit round 1 |
 | **Phase 2** | M7+ | Formal verification · Audit round 2 · Bug bounty · Arc mainnet deployment |
 
-## 📄 License
+## License
 
 [BUSL-1.1](LICENSE) — converts to GPL-2.0-or-later on 2030-05-17.
 
-## 🙏 Acknowledgements
+## Acknowledgements
 
 - [OpenZeppelin](https://openzeppelin.com) — contract libraries (v5.6.1)
 - [Foundry](https://github.com/foundry-rs/foundry) — development toolchain
