@@ -92,4 +92,7 @@ interface IMarginEngine {
     /// @param recipient Destination address (liquidator or protection buyer).
     /// @param amount    USDC 6-decimal amount to transfer (must be <= account.collateral).
     function seizeCollateral(address account, address recipient, uint256 amount) external;
+
+    /// @notice Liquidation bonus in BPS (e.g. 200 = 2%). Read by CDSVault during liquidation.
+    function liquidationBonusBps() external view returns (uint256);
 }

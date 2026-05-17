@@ -171,5 +171,8 @@ error ZeroAmount();
 /// @notice Array lengths do not match.
 error LengthMismatch(uint256 a, uint256 b);
 
+/// @notice CDS maturity timestamp is not in the future.
+error InvalidMaturity(uint64 maturity, uint64 current);
+
 /// @notice Value exceeds the maximum BPS (10_000).
 error InvalidBps(uint256 value);
