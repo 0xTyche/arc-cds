@@ -176,3 +176,27 @@ error InvalidMaturity(uint64 maturity, uint64 current);
 
 /// @notice Value exceeds the maximum BPS (10_000).
 error InvalidBps(uint256 value);
+
+// -----------------------------------------------------------------------------
+// Oracle adapters
+// -----------------------------------------------------------------------------
+
+/// @notice The requested feed ID is not registered on this adapter.
+error FeedNotSupported(bytes32 feedId);
+
+/// @notice Pyth price exponent is outside the safe WAD conversion range [-18, 18].
+error PythExpoOutOfBounds(int32 expo);
+
+// -----------------------------------------------------------------------------
+// Governance
+// -----------------------------------------------------------------------------
+
+/// @notice CDSProp stake available is below the required minimum to create a proposal.
+error InsufficientProposalStake(uint256 required, uint256 available);
+
+// -----------------------------------------------------------------------------
+// Permissioned tokens (USYC allowlist)
+// -----------------------------------------------------------------------------
+
+/// @notice Address is not on the USYC allowlist and cannot hold or transfer this token.
+error NotAllowlisted(address account);
