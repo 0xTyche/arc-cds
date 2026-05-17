@@ -1,0 +1,67 @@
+[profile.default]
+src            = "contracts"
+out            = "out"
+libs           = ["lib"]
+test           = "test"
+script         = "script"
+solc           = "0.8.28"
+evm_version    = "prague"
+via_ir         = true
+optimizer      = true
+optimizer_runs = 200
+bytecode_hash  = "none"        # reproducible builds — no metadata hash embedded
+
+# Arc Testnet: maxFeePerGas floor = 20 Gwei (pitfall #8); scripts must use this
+# value as the lower bound when building transactions.
+
+# ── Fuzz & invariant (local development) ──────────────────────────────────────
+[profile.default.fuzz]
+runs             = 256
+max_test_rejects = 65536
+
+[profile.default.invariant]
+runs  = 256
+depth = 32
+
+# ── CI profile ─────────────────────────────────────────────────────────────────
+# Activate with: FOUNDRY_PROFILE=ci forge test
+[profile.ci]
+optimizer_runs = 200
+[profile.ci.fuzz]
+runs             = 5000
+max_test_rejects = 65536
+[profile.ci.invariant]
+runs  = 5000
+depth = 64
+
+# ── Nightly long-run profile ───────────────────────────────────────────────────
+# Activate with: FOUNDRY_PROFILE=nightly forge test
+# Run in dedicated workflow with isolated resource pool.
+[profile.nightly]
+optimizer_runs = 200
+[profile.nightly.fuzz]
+runs             = 50000
+max_test_rejects = 65536
+[profile.nightly.invariant]
+runs  = 50000
+depth = 128
+
+# ── Formatter ─────────────────────────────────────────────────────────────────
+[fmt]
+line_length         = 120
+tab_width           = 4
+bracket_spacing     = true
+int_types           = "long"
+multiline_func_header = "params_first"
+quote_style         = "double"
+number_underscore   = "thousands"
+wrap_comments       = true
+
+# ── RPC endpoints ─────────────────────────────────────────────────────────────
+[rpc_endpoints]
+arc_testnet = "${ARC_RPC_HTTP}"
+anvil       = "http://127.0.0.1:8545"
+
+# ── Block explorer ────────────────────────────────────────────────────────────
+[etherscan]
+arc_testnet = { key = "${ARCSCAN_API_KEY}", url = "https://testnet.arcscan.app/api" }

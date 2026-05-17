@@ -1,0 +1,26 @@
+{
+  "extends": "solhint:recommended",
+  "plugins": [],
+  "rules": {
+    "compiler-version": ["error", "^0.8.28"],
+    "func-visibility": ["error", { "ignoreConstructors": true }],
+    "no-empty-blocks": "warn",
+    "not-rely-on-time": "warn",
+    "avoid-call-value": "error",
+    "avoid-low-level-calls": "warn",
+    "no-inline-assembly": "warn",
+    "reentrancy": "error",
+    "multiple-sends": "error",
+    "reason-string": ["warn", { "maxLength": 64 }],
+    "custom-errors": "warn",
+    "named-parameters-mapping": "warn",
+    "no-global-import": "error",
+    "ordering": "warn",
+    "gas-custom-errors": "warn"
+  },
+  "excludedFiles": [
+    "contracts/mocks/**",
+    "lib/**",
+    "test/**"
+  ]
+}

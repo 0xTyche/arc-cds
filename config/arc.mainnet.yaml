@@ -1,0 +1,105 @@
+# =============================================================================
+# Arc-CDS Protocol — Arc Mainnet Configuration
+# =============================================================================
+# STATUS: PLACEHOLDER. Arc mainnet has NOT launched at the time this file
+# was created (2026-05-17). All fields are TBD and will be populated once
+# Circle publishes official mainnet endpoints, addresses, and parameters.
+#
+# Do not consume this file from production code paths until `network.phase`
+# is flipped to `mainnet` AND every field below has been verified against
+# the official docs and reviewed via a governance proposal.
+#
+# Companion document: docs/reference/arc-chain.md
+# =============================================================================
+
+network:
+  name: arc-mainnet
+  phase: pre-launch                      # pre-launch | mainnet
+  chainId: TBD
+  evmVersion: prague                     # expected (Arc targets Prague)
+  consensus: malachite-bft               # expected, confirm at launch
+  executionClient: reth                  # expected, confirm at launch
+  blockTimeMs: TBD
+  finality: deterministic-sub-second     # expected, confirm at launch
+  explorerUrl: TBD
+  gasTrackerUrl: TBD
+  faucetUrl: null                        # mainnet — no faucet
+  statusUrl: https://status.arc.io
+
+rpc:
+  primary:
+    http: TBD
+    ws: TBD
+  providers:
+    blockdaemon: { http: TBD, ws: TBD }
+    drpc:        { http: TBD, ws: TBD }
+    quicknode:   { http: TBD, ws: TBD }
+    alchemy:     { http: TBD, ws: TBD }
+
+gas:
+  unit: usdc
+  unitDecimals: 18
+  pricingModel: eip-1559-ewma
+  minMaxFeePerGasGwei: TBD               # likely 20+; confirm at launch
+  recommendedPriorityFeeGwei: TBD
+  baseFeeTargetUsd: TBD
+  maxBaseFeeUsdPerGasUnit: TBD
+  throughputGasPerSecond: TBD
+
+contracts:
+  usdc:
+    address: TBD
+    nativeDecimals: 18
+    erc20Decimals: 6
+    interfaceNote: |
+      Dual-interface model expected to match testnet (see pitfall #1).
+      Verify decimals at launch.
+  eurc:
+    address: TBD
+    decimals: 6
+  usyc:
+    token: TBD
+    entitlements: TBD
+    teller: TBD
+    decimals: 6
+    permissioned: true
+    allowlist:
+      deployer: TBD
+      treasury: TBD
+      portalUrl: TBD
+
+cctp:
+  domainId: TBD                          # mainnet domain may differ from testnet (26)
+  tokenMessengerV2: TBD
+  messageTransmitterV2: TBD
+  tokenMinterV2: TBD
+  messageV2: TBD
+
+gateway:
+  wallet: TBD
+  minter: TBD
+
+stablefx:
+  fxEscrow: TBD
+
+ethCommon:
+  create2Factory: TBD
+  multicall3: TBD
+  permit2: TBD
+
+oracles:
+  chainlink:    { enabled: false, dataFeeds: {}, vrfCoordinator: TBD }
+  pyth:         { enabled: false, contract: TBD, priceIds: {}, entropyContract: TBD }
+  redstone:     { enabled: false, pushFeeds: {}, pullModelEnabled: false }
+  stork:        { enabled: false, contract: TBD }
+
+protocol:
+  # Mainnet protocol parameters undergo a separate governance ratification
+  # before launch. The testnet values in arc.testnet.yaml are NOT authoritative
+  # for mainnet — they must be re-derived from production risk modelling and
+  # approved on-chain.
+  governance: TBD
+  fees: TBD
+  margin: TBD
+  oracleSafety: TBD
+  pumpLauncher: TBD

@@ -1,0 +1,110 @@
+# =============================================================================
+# Arc-CDS Protocol — .gitignore
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Secrets — NEVER commit
+# -----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets/
+keystore/
+
+# -----------------------------------------------------------------------------
+# Foundry
+# -----------------------------------------------------------------------------
+out/
+cache/
+broadcast/*/dry-run/
+# Keep `broadcast/*/run-latest.json` ONLY when intentionally archiving a real
+# deployment; the line below ignores them by default to avoid leaking ephemeral
+# addresses or developer wallets into history. Use `git add -f` when archiving.
+broadcast/*/run-latest.json
+broadcast/*/*/run-latest.json
+
+# Forge coverage
+lcov.info
+coverage/
+
+# Foundry snapshot diffs are committed; raw gas reports are not
+.gas-snapshot.tmp
+
+# -----------------------------------------------------------------------------
+# Hardhat (if dual-track)
+# -----------------------------------------------------------------------------
+artifacts/
+typechain-types/
+typechain/
+
+# -----------------------------------------------------------------------------
+# Node / TypeScript
+# -----------------------------------------------------------------------------
+node_modules/
+dist/
+build/
+.next/
+.cache/
+*.tsbuildinfo
+
+# Package manager lockfiles — pick ONE and commit it; this template keeps
+# pnpm-lock.yaml by default. Adjust if the team uses npm/yarn.
+package-lock.json
+yarn.lock
+
+# -----------------------------------------------------------------------------
+# Python (analytics / simulation scripts)
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+
+# -----------------------------------------------------------------------------
+# Editor / OS
+# -----------------------------------------------------------------------------
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.recommended.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# -----------------------------------------------------------------------------
+# Logs & temp
+# -----------------------------------------------------------------------------
+*.log
+logs/
+tmp/
+.tmp/
+*.trace
+*.pprof
+
+# -----------------------------------------------------------------------------
+# Local-only artifacts
+# -----------------------------------------------------------------------------
+# Anvil state dumps
+anvil-state.json
+state.json
+
+# Local subgraph builds
+subgraph/build/
+subgraph/generated/
+
+# Local docs build
+docs/_site/
+.docusaurus/
+
+# Foundry fork cache
+.foundry/cache/
+
+# -----------------------------------------------------------------------------
+# CI / coverage uploads
+# -----------------------------------------------------------------------------
+.codecov.yml.local
