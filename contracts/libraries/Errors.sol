@@ -145,6 +145,9 @@ error SettlementAlreadyComplete(uint256 positionId);
 /// @notice Settlement cannot begin before the credit event is finalized.
 error SettlementPreconditionFailed(uint256 positionId);
 
+/// @notice Settlement has already been initiated for this entity.
+error SettlementAlreadyInitiated(bytes32 entityId);
+
 // -----------------------------------------------------------------------------
 // Token / transfer
 // -----------------------------------------------------------------------------

@@ -73,7 +73,7 @@ interface IMarginEngine {
     ) external view returns (bool);
 
     // -------------------------------------------------------------------------
-    // Liquidation
+    // Liquidation & seizure
     // -------------------------------------------------------------------------
 
     /// @notice Liquidate an undercollateralized account.
@@ -83,4 +83,13 @@ interface IMarginEngine {
     function liquidate(
         address account
     ) external;
+
+    /// @notice Seize `amount` USDC from `account` and transfer to `recipient`.
+    /// @dev Only callable by VAULT_ROLE. CDSVault and SettlementEngine hold this role.
+    ///      Used during liquidation (CDSVault) and credit-event settlement (SettlementEngine).
+    ///      SECURITY: CEI is enforced inside MarginEngine before the transfer.
+    /// @param account   The account whose collateral is seized.
+    /// @param recipient Destination address (liquidator or protection buyer).
+    /// @param amount    USDC 6-decimal amount to transfer (must be <= account.collateral).
+    function seizeCollateral(address account, address recipient, uint256 amount) external;
 }

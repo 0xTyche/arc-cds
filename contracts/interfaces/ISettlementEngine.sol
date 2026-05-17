@@ -5,19 +5,55 @@ pragma solidity 0.8.28;
 /// @notice Handles cash settlement of CDS positions following a finalized credit event.
 ///
 ///         Cash settlement formula (ISDA §5):
-///           payoff = notional * (1 - recoveryRate)
+///           payoff = notional × (1 − recoveryRate)
 ///         The protection buyer receives `payoff` from the protection seller's margin.
-///         Any surplus seller margin above the payoff is returned to the seller.
+///         Payoff is capped at the seller's available collateral to ensure settlement
+///         is never permanently blocked by an undercollateralized account.
 interface ISettlementEngine {
     // -------------------------------------------------------------------------
     // Events
     // -------------------------------------------------------------------------
+
+    /// @notice Emitted when CDSVault registers a position for potential settlement.
+    event PositionRegistered(
+        uint256 indexed positionId, bytes32 indexed entityId, address buyer, address seller, uint256 notionalUsdc
+    );
+
+    /// @notice Emitted when CDSVault removes a position (e.g., closed before default).
+    event PositionDeregistered(uint256 indexed positionId);
 
     event SettlementInitiated(bytes32 indexed entityId, uint256 totalNotional, uint16 recoveryRateBps);
     event PositionSettled(
         uint256 indexed positionId, address indexed buyer, address indexed seller, uint256 payoffUsdc
     );
     event SettlementComplete(bytes32 indexed entityId, uint256 settledCount);
+
+    // -------------------------------------------------------------------------
+    // Position registration (CDSVault only)
+    // -------------------------------------------------------------------------
+
+    /// @notice Register a CDS position for future settlement.
+    /// @dev Called by CDSVault when a protection seller opens a position.
+    ///      Idempotent — duplicate registrations for the same positionId are ignored.
+    /// @param positionId   Unique position identifier assigned by CDSVault.
+    /// @param entityId     Reference entity key.
+    /// @param buyer        Protection buyer address.
+    /// @param seller       Protection seller address.
+    /// @param notionalUsdc Notional in USDC 6-decimal units.
+    function registerPosition(
+        uint256 positionId,
+        bytes32 entityId,
+        address buyer,
+        address seller,
+        uint256 notionalUsdc
+    ) external;
+
+    /// @notice Deregister a position that was closed before a credit event.
+    /// @dev Marks the record as settled so it is skipped during batch settlement.
+    ///      No-op if position is not registered or already settled.
+    function deregisterPosition(
+        uint256 positionId
+    ) external;
 
     // -------------------------------------------------------------------------
     // Settlement flow
@@ -49,7 +85,7 @@ interface ISettlementEngine {
     // -------------------------------------------------------------------------
 
     /// @notice Compute the cash settlement payoff for a given notional and recovery rate.
-    /// @param notionalUsdc Position notional in USDC 6-decimal units.
+    /// @param notionalUsdc    Position notional in USDC 6-decimal units.
     /// @param recoveryRateBps Recovery rate in BPS (0–10_000).
     /// @return payoffUsdc Buyer's payout in USDC 6-decimal units.
     function computePayoff(uint256 notionalUsdc, uint16 recoveryRateBps) external pure returns (uint256 payoffUsdc);
